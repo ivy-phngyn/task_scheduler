@@ -295,19 +295,57 @@ __attribute__((naked)) void PendSV_Handler(void)
 
 void HardFault_Handler(void)
 {
-	printf("Exception: Hardfault\n");
+	uint32_t *pHFSR = (uint32_t*)0xE000ED2C;
+
+	printf("Exception: Hardfault\n");\
+	printf("FORCED: %d\n", (*pHFSR >> 30 & 0x1));
+	printf("VECTTBL: %d\n", (*pHFSR >> 1 & 0x1));
 	while(1);
 }
 
 
 void MemManage_Handler(void)
 {
+	uint32_t *pMMSR = (uint32_t*)0xE000ED28;
+
 	printf("Exception: MemManage\n");
+	printf("MMARVALID: %d\n", (*pMMSR >> 7 & 0x1));
+	printf("MLSPERR: %d\n", (*pMMSR >> 5 & 0x1));
+	printf("MSTKERR: %d\n", (*pMMSR >> 4 & 0x1));
+	printf("MUNSTKERR: %d\n", (*pMMSR >> 3 & 0x1));
+	printf("DACCVIOL: %d\n", (*pMMSR >> 1 & 0x1));
+	printf("IACCVIOL: %d\n", (*pMMSR >> 0 & 0x1));
+
 	while(1);
 }
 
 void BusFault_Handler(void)
 {
+	uint32_t *pBFSR = (uint32_t*)0xE000ED29;
+
 	printf("Exception: BusFault\n");
+	printf("BFARVALID: %d\n", (*pBFSR >> 7 & 0x1));
+	printf("LSPERR: %d\n", (*pBFSR >> 5 & 0x1));
+	printf("STKERR: %d\n", (*pBFSR >> 4 & 0x1));
+	printf("UNSTKERR: %d\n", (*pBFSR >> 3 & 0x1));
+	printf("IMPRECISERR: %d\n", (*pBFSR >> 2 & 0x1));
+	printf("PRECISERR: %d\n", (*pBFSR >> 1 & 0x1));
+	printf("IBUSERR: %d\n", (*pBFSR >> 0 & 0x1));
+	
+	while(1);
+}
+
+void UsageFault_Handler(void)
+{
+	uint32_t *pUFSR = (uint32_t*)0xE000ED2A;
+
+	printf("Exception: UsageFault\n");
+	printf("DIVBYZERO: %d\n", (*pUFSR >> 9 & 0x1));
+	printf("UNALIGNED: %d\n", (*pUFSR >> 8 & 0x1));
+	printf("NOCP: %d\n", (*pUFSR >> 3 & 0x1));
+	printf("INVPC: %d\n", (*pUFSR >> 2 & 0x1));
+	printf("INVSTATE: %d\n", (*pUFSR >> 1 & 0x1));
+	printf("UNDEFINSTR: %d\n", (*pUFSR >> 0 & 0x1));
+	
 	while(1);
 }
