@@ -2,6 +2,7 @@
 #define MAIN_H_
 
 #include <stdint.h>
+#include <stdio.h>
 
 #define MAX_TASKS                   5
 #define SIZE_TASK_STACK             1024U
@@ -147,5 +148,11 @@ void unblock_tasks(void);
 // - tick_count: desired delay for the task, measured in number of system ticks (1 tick = 1ms)
 */
 void task_delay(uint32_t tick_count);
+
+/*
+// Function defined in syscalls.c
+// For initialization of semi-hosting for printing out statements.
+*/
+extern void initialise_monitor_handles(void);
 
 #endif
